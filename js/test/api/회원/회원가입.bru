@@ -1,0 +1,27 @@
+meta {
+  name: 회원가입
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "test202407081208@market.com",
+    "password": "12345678",
+    "name": "jj",
+    "phone": "01011112222",
+    "address": "서울시 강남구 역삼동 123",
+    "type": "user",
+    "profileImage": {
+        "originalname": "ì¤í¬ë¦°ì· 2023-03-08 151455.png",
+        "name": "brMCkbKqc.png",
+        "path": "/files/00-sample/brMCkbKqc.png"
+      }
+  }
+}

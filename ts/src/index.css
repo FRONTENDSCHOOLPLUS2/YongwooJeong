@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .a11y-hidden {
+    @apply overflow-hidden absolute [clip:rect(0,_0,_0,_0)] [clip-path:circle(0)] w-px h-px -m-px border-0 p-0 whitespace-nowrap;
+  }
+}
