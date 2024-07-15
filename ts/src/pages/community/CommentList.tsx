@@ -5,8 +5,7 @@ import CommentItem from "./CommentItem";
 
 const CommnetList = () => {
   const params = useParams();
-  const { data } = useFetch(`/posts/${+params._id}/replies`);
-  console.log(data);
+  const { data } = useFetch(`/posts/${Number(params._id)}/replies`);
 
   return (
     <section className="mb-8">
@@ -21,7 +20,7 @@ const CommnetList = () => {
       ))}
 
       {/* 댓글 입력 */}
-      <CommentNew id={params._id} />
+      <CommentNew id={Number(params._id)} />
     </section>
   );
 };

@@ -10,10 +10,10 @@ const Detail = () => {
 
   const { loginUserData } = useUsersStore();
 
-  const { data, loading } = useFetch(`/posts`);
+  const { data } = useFetch(`/posts`);
   const { send } = useMutate();
 
-  const item = data?.item?.filter((el) => el._id === +params._id)[0];
+  const item = data?.item?.filter((el) => el._id === Number(params._id))[0];
 
   const handlePostDelete = async () => {
     const res = await send.delete(`/posts/${item?._id}`, {

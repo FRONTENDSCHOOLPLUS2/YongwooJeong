@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-const defaultOptions = {
+const defaultOptions: RequestInit = {
   method: "POST",
   mode: "cors",
   body: null,
   cache: "no-cache",
-  credential: "same-origin",
+  credentials: "same-origin",
   redirect: "follow",
   referrerPolicy: "no-referrer",
   headers: {
@@ -16,11 +16,11 @@ const defaultOptions = {
 const API_SERVER = "https://api.fesp.shop";
 
 const useMutate = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  const send = async (options = {}) => {
-    let { url, ...restOptions } = {
+  const send = async (options: RequestInit & { url: string }): Promise<any> => {
+    let { url = "", ...restOptions } = {
       ...defaultOptions,
       ...options,
       headers: {
@@ -60,7 +60,7 @@ const useMutate = () => {
     }
   };
 
-  send.post = (url, body, options) => {
+  send.post = (url: string, body: any, options?: RequestInit) => {
     return send({
       method: "POST",
       url,
@@ -69,7 +69,7 @@ const useMutate = () => {
     });
   };
 
-  send.patch = (url, body, options) => {
+  send.patch = (url: string, body: any, options?: RequestInit) => {
     return send({
       method: "PATCH",
       url,
@@ -78,7 +78,7 @@ const useMutate = () => {
     });
   };
 
-  send.delete = (url, options) => {
+  send.delete = (url: string, options?: RequestInit) => {
     return send({
       method: "DELETE",
       url,

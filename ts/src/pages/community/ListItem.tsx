@@ -1,6 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import { DashboardItem } from "types";
 
-const ListItem = ({ id, title, createdAt, name, num, views }) => {
+type Proptype = Pick<DashboardItem, "title" | "createdAt" | "views">;
+
+const ListItem = ({
+  id,
+  title,
+  createdAt,
+  name,
+  num,
+  views,
+}: Proptype & { id: number; name: string; num: string }) => {
   const navigate = useNavigate();
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300 ease-in-out">

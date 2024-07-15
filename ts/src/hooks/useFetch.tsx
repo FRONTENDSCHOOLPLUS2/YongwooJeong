@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { FetchOptions } from "types";
+import { Dashboard } from "types";
 
-const defaultOptions = {
+const defaultOptions: RequestInit = {
   method: "GET",
   mode: "cors",
   body: null,
   cache: "no-cache",
-  credential: "same-origin",
+  credentials: "same-origin",
   redirect: "follow",
   referrerPolicy: "no-referrer",
   headers: {
@@ -16,13 +16,13 @@ const defaultOptions = {
 
 const API_SERVER = "https://api.fesp.shop";
 
-const useFetch = <T,>(url: string, options: FetchOptions = {}) => {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(false);
+const useFetch = (url: string, options: RequestInit = {}) => {
+  const [data, setData] = useState<Dashboard | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchData = async () => {
-    const restOptions: FetchOptions = {
+  const fetchData = async (): Promise<any> => {
+    let { ...restOptions } = {
       ...defaultOptions,
       ...options,
       headers: {
@@ -44,7 +44,7 @@ const useFetch = <T,>(url: string, options: FetchOptions = {}) => {
         throw new Error(`2xx 이외의 응답: ${response.status}`);
       }
 
-      const result: T = await response.json();
+      const result = await response.json();
       setData(result);
     } catch (err) {
       if (err instanceof TypeError) {

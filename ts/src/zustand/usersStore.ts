@@ -1,8 +1,9 @@
+import { UsersStore } from "types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const useUsersStore = create(
-  persist(
+  persist<UsersStore>(
     (set) => ({
       isLogin: false,
       loginUserData: null,

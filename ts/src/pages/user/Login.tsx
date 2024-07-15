@@ -2,8 +2,11 @@ import Spinner from "@components/Spinner";
 import useMutate from "@hooks/useMutate";
 import useUsersStore from "@zustand/usersStore";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { LoginUser } from "types";
+
+type LoginProps = Pick<LoginUser, "email">;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,13 +18,17 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<LoginProps & { password: string }>();
 
-  const onLogin = async (data) => {
+  const onLogin: SubmitHandler<LoginProps & { password: string }> = async (
+    data
+  ) => {
     const res = await send.post(`/users/login`, {
-      email: data.email,
-      password: data.password,
+      email: data?.email,
+      password: data?.password,
     });
+
+    console.log(data);
 
     localStorage.setItem("accessToken", res.item.token.accessToken);
     localStorage.setItem("refreshToken", res.item.token.refreshToken);

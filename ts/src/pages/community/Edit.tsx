@@ -1,6 +1,14 @@
 import useMutate from "@hooks/useMutate";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+// import { DashboardItem } from "types";
+
+// type EditProps = Pick<DashboardItem, "title" | "content">;
+
+interface EditProps {
+  title: string;
+  content: string;
+}
 
 const Edit = () => {
   const params = useParams();
@@ -11,10 +19,10 @@ const Edit = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<EditProps>();
 
-  const onSubmit = async (data) => {
-    const res = await send.post(`/posts/${params?._id}`, {
+  const onSubmit: SubmitHandler<EditProps> = async (data) => {
+    await send.post(`/posts/${params?._id}`, {
       title: data?.title,
       content: data?.content,
     });
@@ -53,7 +61,7 @@ const Edit = () => {
               내용
             </label>
             <textarea
-              rows="15"
+              rows={15}
               placeholder="내용을 입력하세요."
               className="w-full p-4 text-sm border rounded-lg border-gray-300 bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               {...register("content", {

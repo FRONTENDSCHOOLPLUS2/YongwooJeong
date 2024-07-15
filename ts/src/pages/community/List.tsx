@@ -6,7 +6,6 @@ import ListItem from "@pages/community/ListItem";
 import usePageStore from "@zustand/pageStore";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Dashboard } from "types";
 
 const List = () => {
   const navigate = useNavigate();
@@ -14,16 +13,12 @@ const List = () => {
   const location = useLocation();
   const crrntpage = location.search.match(/(\d+)$/)?.[0] || "1";
 
-  const { data, loading } = useFetch<Dashboard>(
-    `/posts?limit=10&page=${crrntpage}`
-  );
-
-  console.log(data?.item);
+  const { data, loading } = useFetch(`/posts?limit=10&page=${crrntpage}`);
 
   useEffect(() => {
     setCurrentPage(+crrntpage);
     if (data?.pagination.totalPages) {
-      setLastPage(data.pagination.totalPages);
+      setLastPage(data?.pagination.totalPages);
     }
   }, [setCurrentPage, setLastPage, crrntpage, data?.pagination?.totalPages]);
 

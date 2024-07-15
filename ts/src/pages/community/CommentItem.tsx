@@ -1,4 +1,13 @@
-const CommentItem = ({ replyData }) => {
+import { DashboardItem } from "types";
+
+type CommentItemProps = Pick<
+  DashboardItem,
+  "content" | "createdAt" | "updatedAt" | "user" | "_id"
+>;
+
+const CommentItem = ({ replyData }: { replyData: CommentItemProps }) => {
+  console.log(replyData);
+
   return (
     <div className="shadow-md rounded-lg p-4 mb-4">
       <div className="flex justify-between items-center mb-2">

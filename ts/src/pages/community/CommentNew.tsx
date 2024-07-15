@@ -1,18 +1,19 @@
 import useMutate from "@hooks/useMutate";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { DashboardItem } from "types";
 
-const CommentNew = ({ id }) => {
+type CommentNewProps = Pick<DashboardItem, "content">;
+
+const CommentNew = ({ id }: { id: number }) => {
   const { loading, send } = useMutate();
-  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<CommentNewProps>();
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<CommentNewProps> = async (data) => {
     const res = await send.post(
       `/posts/${id}/replies`,
       {
@@ -24,7 +25,6 @@ const CommentNew = ({ id }) => {
         },
       }
     );
-    console.log(id);
 
     if (res.ok) {
       window.location.reload();
@@ -37,11 +37,10 @@ const CommentNew = ({ id }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <textarea
-            rows="3"
-            cols="40"
+            rows={3}
+            cols={40}
             className="block p-2 w-full text-sm border rounded-lg border-gray-300 bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             placeholder="내용을 입력하세요."
-            name="comment"
             {...register("content", {
               minLength: { value: 1, message: "잘못된 입력입니다." },
             })}

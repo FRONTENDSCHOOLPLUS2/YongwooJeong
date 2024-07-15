@@ -1,7 +1,10 @@
 import Spinner from "@components/Spinner";
 import useMutate from "@hooks/useMutate";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { LoginUser } from "types";
+
+type SignupProps = Pick<LoginUser, "email" | "name" | "type" | "profileImage">;
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -10,9 +13,11 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<SignupProps & { password: string }>();
 
-  const onSignup = async (data) => {
+  const onSignup: SubmitHandler<SignupProps & { password: string }> = async (
+    data
+  ) => {
     const formData = new FormData();
     formData.append("attach", data.profileImage[0]);
 
